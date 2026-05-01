@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FRC — New York Property</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #15110d;
+    --ink-soft: #2a241d;
+    --paper: #f4efe6;
+    --paper-2: #ebe4d6;
+    --line: #d8cfbd;
+    --accent: #b8442a;        /* burnt sienna */
+    --accent-deep: #8e3320;
+    --muted: #6f6655;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter Tight', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Subtle paper grain ---------- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  /* ---------- Layout ---------- */
+  .wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(244, 239, 230, 0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .logo-mark {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translateY(-2px);
+  }
+  .logo small {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-links {
+    display: flex;
+    gap: 38px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.25s ease;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 120px 0 100px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: end;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: rise 0.9s 0.1s ease forwards;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: var(--accent);
+  }
+  h1.display {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(54px, 8vw, 124px);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    opacity: 0;
+    animation: rise 1.1s 0.25s ease forwards;
+  }
+  h1.display em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .hero-meta {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+    padding-bottom: 12px;
+    opacity: 0;
+    animation: rise 1.1s 0.5s ease forwards;
+  }
+  .hero-meta p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    max-width: 380px;
+  }
+  .btn-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-ghost:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+  }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ---------- Stats strip ---------- */
+  .stats {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 48px 0;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .stat .num span { color: var(--accent); }
+  .stat .label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------- Section header ---------- */
+  .section { padding: 130px 0; position: relative; }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+    gap: 40px;
+  }
+  .section-head .label {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    max-width: 700px;
+  }
+  .section-head h2 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .section-head .lede {
+    max-width: 360px;
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  /* ---------- Available spaces (the star of the show) ---------- */
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .filter {
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--ink-soft);
+    transition: all 0.2s ease;
+  }
+  .filter:hover { border-color: var(--ink); }
+  .filter.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .spaces {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .space {
+    background: var(--paper);
+    padding: 36px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 320px;
+  }
+  .space:hover {
+    background: var(--paper-2);
+  }
+  .space-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .space-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pulse {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(184, 68, 42, 0.5);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(184, 68, 42, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(184, 68, 42, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(184, 68, 42, 0); }
+  }
+  .space-id {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .space h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-top: auto;
+  }
+  .space-addr {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .space-specs {
+    display: flex;
+    gap: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .spec .v {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .spec .k {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .space-cta {
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  .space:hover .space-cta {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+    transform: rotate(-45deg);
+  }
+
+  /* ---------- Portfolio (buildings) ---------- */
+  .portfolio-section { background: var(--ink); color: var(--paper); }
+  .portfolio-section .section-head h2 { color: var(--paper); }
+  .portfolio-section .section-head h2 em { color: #e8a48b; }
+  .portfolio-section .section-head .label { color: #e8a48b; }
+  .portfolio-section .section-head .lede { color: #c9bfa8; }
+
+  .portfolio {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .building {
+    border: 1px solid #2a241d;
+    background: #1c1813;
+    padding: 28px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .building:hover {
+    background: #221d17;
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .building-img {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #2d251c 0%, #1a1611 100%);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  .building-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232, 164, 139, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232, 164, 139, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  /* Photo variant — when a real building image is present */
+  .building-img.has-photo { padding: 0; }
+  .building-img.has-photo::before { display: none; }
+  .building-img.has-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.15) contrast(1.05);
+    transition: transform 0.6s ease, filter 0.6s ease;
+    /* Hide broken-image icon if file is missing */
+    color: transparent;
+    font-size: 0;
+  }
+  /* If image fails, the gradient + grid background remains visible */
+  .building-img.has-photo img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #2d251c 0%, #1a1611 100%);
+  }
+  .building-img.has-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(21,17,13,0.65) 0%, rgba(21,17,13,0.1) 45%, rgba(21,17,13,0) 100%);
+    z-index: 1;
+  }
+  .building-img.has-photo .building-img-tag {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    z-index: 2;
+  }
+  .building:hover .building-img.has-photo img {
+    transform: scale(1.04);
+    filter: grayscale(0) contrast(1.08);
+  }
+  .building-img-tag {
+    position: relative;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #e8a48b;
+    z-index: 1;
+  }
+  /* Decorative architectural shapes for each building */
+  .b-shape {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 20%;
+  }
+  .b-shape svg {
+    width: 100%;
+    height: 80%;
+    opacity: 0.35;
+  }
+  .building h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.015em;
+    margin-bottom: 6px;
+  }
+  .building-addr { color: #8a8273; font-size: 13px; margin-bottom: 18px; }
+  .building-meta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid #2a241d;
+    font-size: 13px;
+  }
+  .building-meta .label-sm { color: #8a8273; }
+  .building-meta .val { color: var(--paper); }
+
+  /* ---------- Approach / Why FRC ---------- */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 64px;
+  }
+  .approach-item .num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 64px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 28px;
+  }
+  .approach-item h4 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+  }
+  .approach-item p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-section {
+    padding: 140px 0;
+    border-top: 1px solid var(--line);
+  }
+  .cta-inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .cta-section h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 5.5vw, 80px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .cta-section h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
+  .cta-form {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px;
+    border-radius: 4px;
+  }
+  .cta-form .field {
+    border-bottom: 1px solid #3a342b;
+    padding: 14px 0;
+    display: block;
+  }
+  .cta-form label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8a8273;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .cta-form input, .cta-form select {
+    background: transparent;
+    border: none;
+    color: var(--paper);
+    font-family: inherit;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+  }
+  .cta-form select option { background: var(--ink); }
+  .cta-form button {
+    margin-top: 28px;
+    background: var(--accent);
+    color: var(--paper);
+    border: none;
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+  .cta-form button:hover { background: var(--accent-deep); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 0 40px;
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  .foot-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+  }
+  .foot-tag {
+    color: #8a8273;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .foot-col h5 {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8a8273;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .foot-col a {
+    display: block;
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 5px 0;
+    transition: color 0.2s ease;
+  }
+  .foot-col a:hover { color: var(--accent); }
+  .foot-bottom {
+    border-top: 1px solid #2a241d;
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #8a8273;
+  }
+
+  /* ---------- Animations ---------- */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 900px) {
+    .wrap { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 0 70px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-meta { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 32px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .stat .num { font-size: 40px; }
+    .section { padding: 80px 0; }
+    .section-head { flex-direction: column; align-items: flex-start; }
+    .spaces { grid-template-columns: 1fr; }
+    .portfolio { grid-template-columns: 1fr; }
+    .approach-grid { grid-template-columns: 1fr; gap: 48px; }
+    .cta-inner { grid-template-columns: 1fr; gap: 40px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<nav>
+  <div class="wrap">
+    <div class="logo">
+      <span class="logo-mark"></span>
+      FRC
+    </div>
+    <ul class="nav-links">
+      <li><a href="#spaces">Available Spaces</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Inquire →</a>
+  </div>
+</nav>
+
+<!-- ============== HERO ============== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">New York · Owner-Operator · Commercial Real Estate</div>
+        <h1 class="display">
+          Buildings<br/>
+          built for<br/>
+          <em>tenants who stay.</em>
+        </h1>
+      </div>
+      <div class="hero-meta">
+        <p>A focused portfolio of well-located commercial buildings in Long Island City. We own and operate every one ourselves — no layered management.</p>
+        <div class="btn-row">
+          <a href="#spaces" class="btn btn-primary">View available spaces <span class="arrow">→</span></a>
+          <a href="#portfolio" class="btn btn-ghost">Our portfolio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============== STATS ============== -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="num">385<span>K+</span></div>
+        <div class="label">Sq Ft Across Portfolio</div>
+      </div>
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="label">Buildings · All in LIC</div>
+      </div>
+      <div class="stat">
+        <div class="num">$15<span>M+</span></div>
+        <div class="label">In Recent Renovations</div>
+      </div>
+      <div class="stat">
+        <div class="num">2026</div>
+        <div class="label">Newest Acquisition</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== AVAILABLE SPACES ============== -->
+<section class="section" id="spaces">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="label">Available Now</div>
+        <h2>Spaces ready for <em>their next chapter.</em></h2>
+      </div>
+      <p class="lede">Currently leasing across our Long Island City portfolio. Tour by appointment — most spaces deliver in 30–60 days.</p>
+    </div>
+
+    <div class="filters reveal">
+      <button class="filter active" data-f="all">All Spaces</button>
+      <button class="filter" data-f="office">Office</button>
+      <button class="filter" data-f="retail">Retail</button>
+      <button class="filter" data-f="creative">Creative / Loft</button>
+    </div>
+
+    <div class="spaces reveal">
+
+      <article class="space" data-cat="office lic">
+        <div class="space-top">
+          <span class="space-status"><span class="pulse"></span>Now Leasing</span>
+          <span class="space-id">№ BLA–04A</span>
+        </div>
+        <div class="space-cta">→</div>
+        <div>
+          <h3>Pre-built office, full floor</h3>
+          <div class="space-addr">2110 51st Ave · Hunters Point, LIC</div>
+        </div>
+        <div class="space-specs">
+          <div class="spec"><div class="v">8,400</div><div class="k">RSF</div></div>
+          <div class="spec"><div class="v">11'</div><div class="k">Ceilings</div></div>
+          <div class="spec"><div class="v">Q3 '26</div><div class="k">Available</div></div>
+        </div>
+      </article>
+
+      <article class="space" data-cat="retail lic">
+        <div class="space-top">
+          <span class="space-status"><span class="pulse"></span>Now Leasing</span>
+          <span class="space-id">№ PNK–GR1</span>
+        </div>
+        <div class="space-cta">→</div>
+        <div>
+          <h3>Ground-floor corner retail</h3>
+          <div class="space-addr">10-15 46th Ave · Hunters Point, LIC</div>
+        </div>
+        <div class="space-specs">
+          <div class="spec"><div class="v">2,250</div><div class="k">RSF</div></div>
+          <div class="spec"><div class="v">42'</div><div class="k">Frontage</div></div>
+          <div class="spec"><div class="v">Now</div><div class="k">Available</div></div>
+        </div>
+      </article>
+
+      <article class="space" data-cat="creative lic">
+        <div class="space-top">
+          <span class="space-status"><span class="pulse"></span>Now Leasing</span>
+          <span class="space-id">№ BLA–03C</span>
+        </div>
+        <div class="space-cta">→</div>
+        <div>
+          <h3>Loft suite with private terrace</h3>
+          <div class="space-addr">2110 51st Ave · Hunters Point, LIC</div>
+        </div>
+        <div class="space-specs">
+          <div class="spec"><div class="v">3,100</div><div class="k">RSF</div></div>
+          <div class="spec"><div class="v">11'</div><div class="k">Ceilings</div></div>
+          <div class="spec"><div class="v">May '26</div><div class="k">Available</div></div>
+        </div>
+      </article>
+
+      <article class="space" data-cat="creative lic">
+        <div class="space-top">
+          <span class="space-status"><span class="pulse"></span>Now Leasing</span>
+          <span class="space-id">№ PNK–02</span>
+        </div>
+        <div class="space-cta">→</div>
+        <div>
+          <h3>Creative loft, divisible</h3>
+          <div class="space-addr">10-15 46th Ave · Hunters Point, LIC</div>
+        </div>
+        <div class="space-specs">
+          <div class="spec"><div class="v">12,000</div><div class="k">RSF</div></div>
+          <div class="spec"><div class="v">2,800+</div><div class="k">Min Divisible</div></div>
+          <div class="spec"><div class="v">Now</div><div class="k">Available</div></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== PORTFOLIO ============== -->
+<section class="section portfolio-section" id="portfolio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="label">The Portfolio</div>
+        <h2>Three buildings. <em>One neighborhood.</em></h2>
+      </div>
+      <p class="lede">Concentrated in Long Island City — Hunters Point and Sunnyside borders. We don't manage everything we touch. We own and operate every building ourselves.</p>
+    </div>
+
+    <div class="portfolio reveal">
+
+      <div class="building">
+        <div class="building-img has-photo">
+          <img src="images/blanchard.jpg" alt="The Blanchard Building, Long Island City" loading="lazy" />
+          <span class="building-img-tag">Long Island City</span>
+        </div>
+        <h4>The Blanchard</h4>
+        <div class="building-addr">2110 51st Avenue, LIC</div>
+        <div class="building-meta">
+          <span class="label-sm">Creative Office</span>
+          <span class="val">220,000 SF</span>
+        </div>
+      </div>
+
+      <div class="building">
+        <div class="building-img has-photo">
+          <img src="images/skillman.webp" alt="33-02 Skillman Avenue, Long Island City" loading="lazy" />
+          <span class="building-img-tag">LIC · Acquiring 2026</span>
+        </div>
+        <h4>33-02 Skillman</h4>
+        <div class="building-addr">Long Island City, Queens</div>
+        <div class="building-meta">
+          <span class="label-sm">Flex / Office</span>
+          <span class="val">104,000 SF</span>
+        </div>
+      </div>
+
+      <div class="building">
+        <div class="building-img has-photo">
+          <img src="images/46th-ave.jpg" alt="10-15 46th Avenue, Long Island City" loading="lazy" />
+          <span class="building-img-tag">Hunters Point</span>
+        </div>
+        <h4>10-15 46th Avenue</h4>
+        <div class="building-addr">Hunters Point, LIC</div>
+        <div class="building-meta">
+          <span class="label-sm">Loft / Creative</span>
+          <span class="val">60,000 SF</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== APPROACH ============== -->
+<section class="section" id="approach">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="label">Why Tenants Stay</div>
+        <h2>An owner-operator <em>actually picks up.</em></h2>
+      </div>
+      <p class="lede">Most landlords answer to a fund. We answer to the tenant in Suite 04 who needs a leak fixed before Monday.</p>
+    </div>
+
+    <div class="approach-grid">
+      <div class="approach-item reveal">
+        <div class="num">01</div>
+        <h4>One point of contact</h4>
+        <p>No layered management companies. The person who signs your lease is the person who shows up when something breaks.</p>
+      </div>
+      <div class="approach-item reveal">
+        <div class="num">02</div>
+        <h4>Capital that matches the lease</h4>
+        <p>If your business needs the build-out done right, we'll fund it right. We measure success in 10-year tenants, not quarterly NOI.</p>
+      </div>
+      <div class="approach-item reveal">
+        <div class="num">03</div>
+        <h4>Buildings we know inside out</h4>
+        <p>We walk our properties every week. We know which radiator runs hot in February and which freight elevator is fastest at 4pm.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA ============== -->
+<section class="cta-section" id="contact">
+  <div class="wrap">
+    <div class="cta-inner">
+      <div class="reveal">
+        <h2>Looking for space?<br/><em>Let's talk this week.</em></h2>
+      </div>
+      <form class="cta-form reveal" onsubmit="event.preventDefault(); alert('Thanks — we\\'ll be in touch within 24 hours.');">
+        <div class="field">
+          <label>Your Name</label>
+          <input type="text" placeholder="Jane Doe" required />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="jane@company.com" required />
+        </div>
+        <div class="field">
+          <label>What kind of space?</label>
+          <select>
+            <option>Office</option>
+            <option>Retail</option>
+            <option>Creative / Loft</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Approximate Size (RSF)</label>
+          <input type="text" placeholder="2,000 – 5,000 sq ft" />
+        </div>
+        <button type="submit">Send inquiry <span class="arrow">→</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">FRC</div>
+        <p class="foot-tag">A New York commercial real estate owner-operator. Long Island City.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Leasing</h5>
+        <a href="#spaces">Available Spaces</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Inquire</a>
+      </div>
+      <div class="foot-col">
+        <h5>Tenants</h5>
+        <a href="#">Tenant Portal</a>
+        <a href="#">Maintenance Request</a>
+        <a href="#">Pay Rent</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <a href="mailto:leasing@frcre.com">leasing@frcre.com</a>
+        <a href="tel:+12125550100">(212) 555–0100</a>
+        <a href="#">New York, NY</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 FRC Property Management LLC</span>
+      <span>Built in Long Island City</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Filter logic for available spaces
+  const filters = document.querySelectorAll('.filter');
+  const spaces = document.querySelectorAll('.space');
+  filters.forEach(f => {
+    f.addEventListener('click', () => {
+      filters.forEach(x => x.classList.remove('active'));
+      f.classList.add('active');
+      const cat = f.dataset.f;
+      spaces.forEach(s => {
+        if (cat === 'all' || s.dataset.cat.includes(cat)) {
+          s.style.display = 'flex';
+        } else {
+          s.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  // Reveal-on-scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
