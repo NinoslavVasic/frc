@@ -47,7 +47,14 @@
 
   /* ---------- Layout ---------- */
   .wrap {
-    max-width: 1320px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .wrap-narrow {
+    max-width: 780px;
     margin: 0 auto;
     padding: 0 32px;
     position: relative;
@@ -135,7 +142,7 @@
 
   /* ---------- Hero ---------- */
   .hero {
-    padding: 120px 0 100px;
+    padding: 90px 0 90px;
     position: relative;
   }
   .hero-grid {
@@ -149,7 +156,7 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 40px;
+    margin-bottom: 28px;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -235,21 +242,21 @@
   .stats {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
-    padding: 48px 0;
+    padding: 56px 0;
   }
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+    gap: 32px 40px;
   }
   .stat .num {
     font-family: 'Fraunces', serif;
-    font-size: 56px;
+    font-size: 60px;
     font-weight: 400;
     line-height: 1;
     letter-spacing: -0.03em;
     color: var(--ink);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .stat .num span { color: var(--accent); }
   .stat .label {
@@ -260,20 +267,21 @@
   }
 
   /* ---------- Section header ---------- */
-  .section { padding: 130px 0; position: relative; }
+  .section { padding: 100px 0; position: relative; }
   .section-head {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 64px;
-    gap: 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 48px;
+    gap: 20px;
+    max-width: 880px;
   }
   .section-head .label {
     font-size: 12px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 18px;
+    margin-bottom: 0;
   }
   .section-head h2 {
     font-family: 'Fraunces', serif;
@@ -281,7 +289,7 @@
     font-weight: 400;
     line-height: 1;
     letter-spacing: -0.025em;
-    max-width: 700px;
+    max-width: 880px;
   }
   .section-head h2 em {
     font-style: italic;
@@ -289,9 +297,9 @@
     color: var(--accent);
   }
   .section-head .lede {
-    max-width: 360px;
+    max-width: 580px;
     color: var(--ink-soft);
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.55;
   }
 
@@ -321,22 +329,23 @@
   }
 
   .spaces {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
+    max-width: 880px;
   }
   .space {
     background: var(--paper);
-    padding: 36px;
+    padding: 36px 40px;
     cursor: pointer;
     transition: background 0.3s ease;
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    min-height: 320px;
+    min-height: 220px;
   }
   .space:hover {
     background: var(--paper-2);
@@ -435,31 +444,63 @@
   .portfolio-section .section-head .lede { color: #c9bfa8; }
 
   .portfolio {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
   }
   .building {
-    border: 1px solid #2a241d;
-    background: #1c1813;
-    padding: 28px;
+    border: none;
+    background: transparent;
+    padding: 0;
     transition: all 0.3s ease;
     cursor: pointer;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  /* Alternate sides: photo right, then photo left */
+  .building:nth-child(even) {
+    grid-template-columns: 1fr 1.4fr;
+  }
+  .building:nth-child(even) .building-img {
+    order: 2;
+  }
+  .building:nth-child(even) .building-info {
+    order: 1;
   }
   .building:hover {
-    background: #221d17;
-    border-color: var(--accent);
-    transform: translateY(-3px);
+    transform: none;
   }
   .building-img {
     aspect-ratio: 4/3;
     background: linear-gradient(135deg, #2d251c 0%, #1a1611 100%);
-    margin-bottom: 24px;
+    margin-bottom: 0;
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
-    padding: 16px;
+    padding: 20px;
+    border-radius: 2px;
+  }
+  .building-info {
+    padding: 16px 8px;
+  }
+  .building-info-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #e8a48b;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .building-info-label::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: #e8a48b;
   }
   .building-img::before {
     content: '';
@@ -534,26 +575,43 @@
   .building h4 {
     font-family: 'Fraunces', serif;
     font-weight: 400;
-    font-size: 26px;
-    letter-spacing: -0.015em;
-    margin-bottom: 6px;
+    font-size: 36px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--paper);
   }
-  .building-addr { color: #8a8273; font-size: 13px; margin-bottom: 18px; }
+  .building-addr { color: #c9bfa8; font-size: 15px; margin-bottom: 24px; }
   .building-meta {
     display: flex;
-    justify-content: space-between;
-    padding-top: 18px;
+    justify-content: flex-start;
+    gap: 40px;
+    padding-top: 20px;
     border-top: 1px solid #2a241d;
-    font-size: 13px;
+    font-size: 14px;
   }
   .building-meta .label-sm { color: #8a8273; }
   .building-meta .val { color: var(--paper); }
 
   /* ---------- Approach / Why FRC ---------- */
   .approach-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 880px;
+  }
+  .approach-item {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 64px;
+    grid-template-columns: 120px 1fr;
+    gap: 32px;
+    align-items: start;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .approach-item:first-child { padding-top: 0; }
+  .approach-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
   }
   .approach-item .num {
     font-family: 'Fraunces', serif;
@@ -561,33 +619,35 @@
     font-weight: 300;
     font-size: 64px;
     color: var(--accent);
-    line-height: 1;
-    margin-bottom: 28px;
+    line-height: 0.9;
+    margin-bottom: 0;
   }
+  .approach-item .approach-text { padding-top: 8px; }
   .approach-item h4 {
     font-family: 'Fraunces', serif;
     font-weight: 400;
     font-size: 26px;
-    line-height: 1.15;
+    line-height: 1.2;
     letter-spacing: -0.015em;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .approach-item p {
     color: var(--ink-soft);
-    font-size: 15px;
-    line-height: 1.65;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 580px;
   }
 
   /* ---------- CTA ---------- */
   .cta-section {
-    padding: 140px 0;
+    padding: 100px 0;
     border-top: 1px solid var(--line);
   }
   .cta-inner {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 80px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 780px;
   }
   .cta-section h2 {
     font-family: 'Fraunces', serif;
@@ -716,18 +776,38 @@
   @media (max-width: 900px) {
     .wrap { padding: 0 20px; }
     .nav-links { display: none; }
-    .hero { padding: 60px 0 70px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero-meta { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 32px; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
-    .stat .num { font-size: 40px; }
-    .section { padding: 80px 0; }
-    .section-head { flex-direction: column; align-items: flex-start; }
-    .spaces { grid-template-columns: 1fr; }
-    .portfolio { grid-template-columns: 1fr; }
-    .approach-grid { grid-template-columns: 1fr; gap: 48px; }
-    .cta-inner { grid-template-columns: 1fr; gap: 40px; }
-    .foot-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .hero { padding: 56px 0 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .hero-meta { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 28px; }
+    .hero-meta p { font-size: 16px; }
+    .stats { padding: 36px 0; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 28px; }
+    .stat .num { font-size: 44px; }
+    .section { padding: 64px 0; }
+    .section-head { margin-bottom: 36px; gap: 16px; }
+    .building {
+      grid-template-columns: 1fr !important;
+      gap: 20px;
+    }
+    .building:nth-child(even) .building-img { order: 0; }
+    .building:nth-child(even) .building-info { order: 0; }
+    .building h4 { font-size: 28px; }
+    .building-info { padding: 0; }
+    .approach-item {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 32px 0;
+    }
+    .approach-item .num { font-size: 56px; }
+    .approach-item h4 { font-size: 22px; }
+    .space { padding: 28px 24px; min-height: auto; gap: 20px; }
+    .space-cta { top: 24px; right: 24px; width: 36px; height: 36px; }
+    .space h3 { font-size: 24px; }
+    .space-specs { gap: 22px; }
+    .cta-section { padding: 64px 0; }
+    .cta-inner { gap: 28px; }
+    .cta-form { padding: 24px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   }
 </style>
 </head>
@@ -907,11 +987,14 @@
           <img src="images/blanchard.jpg" alt="The Blanchard Building, Long Island City" loading="lazy" />
           <span class="building-img-tag">Long Island City</span>
         </div>
-        <h4>The Blanchard</h4>
-        <div class="building-addr">2110 51st Avenue, LIC</div>
-        <div class="building-meta">
-          <span class="label-sm">Creative Office</span>
-          <span class="val">220,000 SF</span>
+        <div class="building-info">
+          <div class="building-info-label">Property 01</div>
+          <h4>The Blanchard</h4>
+          <div class="building-addr">2110 51st Avenue · 2109 Borden Ave</div>
+          <div class="building-meta">
+            <span class="label-sm">Creative Office</span>
+            <span class="val">220,000 SF</span>
+          </div>
         </div>
       </div>
 
@@ -920,11 +1003,14 @@
           <img src="images/skillman.webp" alt="33-02 Skillman Avenue, Long Island City" loading="lazy" />
           <span class="building-img-tag">LIC · Acquiring 2026</span>
         </div>
-        <h4>33-02 Skillman</h4>
-        <div class="building-addr">Long Island City, Queens</div>
-        <div class="building-meta">
-          <span class="label-sm">Flex / Office</span>
-          <span class="val">104,000 SF</span>
+        <div class="building-info">
+          <div class="building-info-label">Property 02</div>
+          <h4>33-02 Skillman</h4>
+          <div class="building-addr">Long Island City, Queens</div>
+          <div class="building-meta">
+            <span class="label-sm">Flex / Office</span>
+            <span class="val">104,000 SF</span>
+          </div>
         </div>
       </div>
 
@@ -933,11 +1019,14 @@
           <img src="images/46th-ave.jpg" alt="10-15 46th Avenue, Long Island City" loading="lazy" />
           <span class="building-img-tag">Hunters Point</span>
         </div>
-        <h4>10-15 46th Avenue</h4>
-        <div class="building-addr">Hunters Point, LIC</div>
-        <div class="building-meta">
-          <span class="label-sm">Loft / Creative</span>
-          <span class="val">60,000 SF</span>
+        <div class="building-info">
+          <div class="building-info-label">Property 03</div>
+          <h4>10-15 46th Avenue</h4>
+          <div class="building-addr">Hunters Point, LIC</div>
+          <div class="building-meta">
+            <span class="label-sm">Loft / Creative</span>
+            <span class="val">60,000 SF</span>
+          </div>
         </div>
       </div>
 
@@ -959,18 +1048,24 @@
     <div class="approach-grid">
       <div class="approach-item reveal">
         <div class="num">01</div>
-        <h4>One point of contact</h4>
-        <p>No layered management companies. The person who signs your lease is the person who shows up when something breaks.</p>
+        <div class="approach-text">
+          <h4>One point of contact</h4>
+          <p>No layered management companies. The person who signs your lease is the person who shows up when something breaks.</p>
+        </div>
       </div>
       <div class="approach-item reveal">
         <div class="num">02</div>
-        <h4>Capital that matches the lease</h4>
-        <p>If your business needs the build-out done right, we'll fund it right. We measure success in 10-year tenants, not quarterly NOI.</p>
+        <div class="approach-text">
+          <h4>Capital that matches the lease</h4>
+          <p>If your business needs the build-out done right, we'll fund it right. We measure success in 10-year tenants, not quarterly NOI.</p>
+        </div>
       </div>
       <div class="approach-item reveal">
         <div class="num">03</div>
-        <h4>Buildings we know inside out</h4>
-        <p>We walk our properties every week. We know which radiator runs hot in February and which freight elevator is fastest at 4pm.</p>
+        <div class="approach-text">
+          <h4>Buildings we know inside out</h4>
+          <p>We walk our properties every week. We know which radiator runs hot in February and which freight elevator is fastest at 4pm.</p>
+        </div>
       </div>
     </div>
   </div>
