@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>FRC — New York Property</title>
+<title>FRC Property Management — Long Island City Commercial Real Estate</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -14,13 +14,13 @@
     --paper: #f4efe6;
     --paper-2: #ebe4d6;
     --line: #d8cfbd;
-    --accent: #b8442a;        /* burnt sienna */
+    --accent: #b8442a;
     --accent-deep: #8e3320;
     --muted: #6f6655;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  html, body { border: none; outline: none; }
   html { scroll-behavior: smooth; }
 
   body {
@@ -33,7 +33,6 @@
     overflow-x: hidden;
   }
 
-  /* ---------- Subtle paper grain ---------- */
   body::before {
     content: '';
     position: fixed;
@@ -45,7 +44,6 @@
     mix-blend-mode: multiply;
   }
 
-  /* ---------- Layout ---------- */
   .wrap {
     max-width: 1100px;
     margin: 0 auto;
@@ -215,27 +213,11 @@
     transition: all 0.25s ease;
     border: 1px solid transparent;
   }
-  .btn-primary {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .btn-primary:hover {
-    background: var(--accent);
-    transform: translateY(-1px);
-  }
-  .btn-ghost {
-    background: transparent;
-    color: var(--ink);
-    border-color: var(--ink);
-  }
-  .btn-ghost:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .arrow {
-    display: inline-block;
-    transition: transform 0.25s ease;
-  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+  .btn-ghost:hover { background: var(--ink); color: var(--paper); }
+  .arrow { display: inline-block; transition: transform 0.25s ease; }
   .btn:hover .arrow { transform: translateX(4px); }
 
   /* ---------- Stats strip ---------- */
@@ -281,7 +263,6 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 0;
   }
   .section-head h2 {
     font-family: 'Fraunces', serif;
@@ -291,11 +272,7 @@
     letter-spacing: -0.025em;
     max-width: 880px;
   }
-  .section-head h2 em {
-    font-style: italic;
-    font-weight: 300;
-    color: var(--accent);
-  }
+  .section-head h2 em { font-style: italic; font-weight: 300; color: var(--accent); }
   .section-head .lede {
     max-width: 580px;
     color: var(--ink-soft);
@@ -303,7 +280,7 @@
     line-height: 1.55;
   }
 
-  /* ---------- Available spaces (the star of the show) ---------- */
+  /* ---------- Available spaces ---------- */
   .filters {
     display: flex;
     gap: 8px;
@@ -322,11 +299,7 @@
     transition: all 0.2s ease;
   }
   .filter:hover { border-color: var(--ink); }
-  .filter.active {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-  }
+  .filter.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
   .spaces {
     display: flex;
@@ -347,9 +320,7 @@
     gap: 24px;
     min-height: 220px;
   }
-  .space:hover {
-    background: var(--paper-2);
-  }
+  .space:hover { background: var(--paper-2); }
   .space-top {
     display: flex;
     justify-content: space-between;
@@ -370,13 +341,12 @@
     height: 7px;
     background: var(--accent);
     border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(184, 68, 42, 0.5);
     animation: pulse 2s infinite;
   }
   @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(184, 68, 42, 0.5); }
-    70% { box-shadow: 0 0 0 8px rgba(184, 68, 42, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(184, 68, 42, 0); }
+    0%   { box-shadow: 0 0 0 0   rgba(184,68,42,0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(184,68,42,0);   }
+    100% { box-shadow: 0 0 0 0   rgba(184,68,42,0);   }
   }
   .space-id {
     font-family: 'Fraunces', serif;
@@ -392,29 +362,15 @@
     letter-spacing: -0.02em;
     margin-top: auto;
   }
-  .space-addr {
-    color: var(--muted);
-    font-size: 14px;
-    margin-top: 6px;
-  }
+  .space-addr { color: var(--muted); font-size: 14px; margin-top: 6px; }
   .space-specs {
     display: flex;
     gap: 28px;
     padding-top: 20px;
     border-top: 1px solid var(--line);
   }
-  .spec .v {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .spec .k {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+  .spec .v { font-family: 'Fraunces', serif; font-size: 22px; line-height: 1; margin-bottom: 4px; }
+  .spec .k { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
   .space-cta {
     position: absolute;
     top: 36px;
@@ -428,6 +384,7 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    font-size: 16px;
   }
   .space:hover .space-cta {
     background: var(--accent);
@@ -436,46 +393,105 @@
     transform: rotate(-45deg);
   }
 
-  /* ---------- Portfolio (buildings) ---------- */
+  /* Coming Soon flagship card */
+  .space-coming-soon {
+    background: var(--ink);
+    color: var(--paper);
+    border-left: 3px solid var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+  .space-coming-soon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/skillman.webp');
+    background-size: cover;
+    background-position: center 40%;
+    opacity: 0.18;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+  }
+  .space-coming-soon:hover::before { opacity: 0.28; }
+  .space-coming-soon > * { position: relative; z-index: 1; }
+  .space-coming-soon:hover { background: var(--ink); }
+  .space-coming-soon h3 { color: var(--paper); }
+  .space-coming-soon .space-addr { color: #c9bfa8; }
+  .space-coming-soon .space-specs { border-top-color: #3a342b; }
+  .space-coming-soon .spec .v { color: var(--paper); }
+  .space-coming-soon .spec .k { color: #8a8273; }
+  .space-coming-soon .space-id { color: #8a8273; }
+  .space-coming-soon .space-cta { border-color: #3a342b; color: var(--paper); transform: none !important; }
+  .space-coming-soon:hover .space-cta { background: var(--accent); border-color: var(--accent); }
+  .coming-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #e8a48b;
+  }
+  .coming-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #e8a48b;
+    border-radius: 50%;
+    animation: pulse-warm 2.5s infinite;
+  }
+  @keyframes pulse-warm {
+    0%   { box-shadow: 0 0 0 0   rgba(232,164,139,0.5); }
+    70%  { box-shadow: 0 0 0 8px rgba(232,164,139,0);   }
+    100% { box-shadow: 0 0 0 0   rgba(232,164,139,0);   }
+  }
+  .space-flagship-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(184,68,42,0.15);
+    border: 1px solid rgba(184,68,42,0.25);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .space-coming-note {
+    font-size: 13px;
+    color: #8a8273;
+    padding-top: 14px;
+    border-top: 1px solid #3a342b;
+    margin-top: -8px;
+  }
+  .space-coming-note a { color: #e8a48b; text-decoration: none; }
+  .space-coming-note a:hover { text-decoration: underline; }
+
+  /* ---------- Portfolio ---------- */
   .portfolio-section { background: var(--ink); color: var(--paper); }
   .portfolio-section .section-head h2 { color: var(--paper); }
   .portfolio-section .section-head h2 em { color: #e8a48b; }
   .portfolio-section .section-head .label { color: #e8a48b; }
   .portfolio-section .section-head .lede { color: #c9bfa8; }
 
-  .portfolio {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
+  .portfolio { display: flex; flex-direction: column; gap: 32px; }
   .building {
     border: none;
     background: transparent;
     padding: 0;
-    transition: all 0.3s ease;
-    cursor: pointer;
     display: grid;
     grid-template-columns: 1.4fr 1fr;
     gap: 40px;
     align-items: center;
   }
-  /* Alternate sides: photo right, then photo left */
-  .building:nth-child(even) {
-    grid-template-columns: 1fr 1.4fr;
-  }
-  .building:nth-child(even) .building-img {
-    order: 2;
-  }
-  .building:nth-child(even) .building-info {
-    order: 1;
-  }
-  .building:hover {
-    transform: none;
-  }
+  .building:nth-child(even) { grid-template-columns: 1fr 1.4fr; }
+  .building:nth-child(even) .building-img { order: 2; }
+  .building:nth-child(even) .building-info { order: 1; }
+
   .building-img {
     aspect-ratio: 4/3;
     background: linear-gradient(135deg, #2d251c 0%, #1a1611 100%);
-    margin-bottom: 0;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -483,9 +499,7 @@
     padding: 20px;
     border-radius: 2px;
   }
-  .building-info {
-    padding: 16px 8px;
-  }
+  .building-info { padding: 16px 8px; }
   .building-info-label {
     font-size: 11px;
     letter-spacing: 0.22em;
@@ -496,22 +510,16 @@
     align-items: center;
     gap: 12px;
   }
-  .building-info-label::before {
-    content: '';
-    width: 28px;
-    height: 1px;
-    background: #e8a48b;
-  }
+  .building-info-label::before { content: ''; width: 28px; height: 1px; background: #e8a48b; }
   .building-img::before {
     content: '';
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(232, 164, 139, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232, 164, 139, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(232,164,139,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,164,139,0.04) 1px, transparent 1px);
     background-size: 24px 24px;
   }
-  /* Photo variant — when a real building image is present */
   .building-img.has-photo { padding: 0; }
   .building-img.has-photo::before { display: none; }
   .building-img.has-photo img {
@@ -522,34 +530,18 @@
     object-fit: cover;
     filter: grayscale(0.15) contrast(1.05);
     transition: transform 0.6s ease, filter 0.6s ease;
-    /* Hide broken-image icon if file is missing */
     color: transparent;
     font-size: 0;
-  }
-  /* If image fails, the gradient + grid background remains visible */
-  .building-img.has-photo img::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #2d251c 0%, #1a1611 100%);
   }
   .building-img.has-photo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(21,17,13,0.65) 0%, rgba(21,17,13,0.1) 45%, rgba(21,17,13,0) 100%);
+    background: linear-gradient(to top, rgba(21,17,13,0.65) 0%, rgba(21,17,13,0.1) 45%, transparent 100%);
     z-index: 1;
   }
-  .building-img.has-photo .building-img-tag {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    z-index: 2;
-  }
-  .building:hover .building-img.has-photo img {
-    transform: scale(1.04);
-    filter: grayscale(0) contrast(1.08);
-  }
+  .building-img.has-photo .building-img-tag { position: absolute; bottom: 16px; left: 16px; z-index: 2; }
+  .building:hover .building-img.has-photo img { transform: scale(1.04); filter: grayscale(0) contrast(1.08); }
   .building-img-tag {
     position: relative;
     font-size: 11px;
@@ -558,7 +550,6 @@
     color: #e8a48b;
     z-index: 1;
   }
-  /* Decorative architectural shapes for each building */
   .b-shape {
     position: absolute;
     inset: 0;
@@ -567,10 +558,21 @@
     justify-content: center;
     padding: 0 20%;
   }
-  .b-shape svg {
-    width: 100%;
-    height: 80%;
-    opacity: 0.35;
+  .b-shape svg { width: 100%; height: 80%; opacity: 0.35; }
+  /* Acquiring badge */
+  .building-acquiring {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #e8a48b;
+    background: rgba(232,164,139,0.12);
+    border: 1px solid rgba(232,164,139,0.22);
+    padding: 5px 12px;
+    border-radius: 999px;
+    z-index: 2;
   }
   .building h4 {
     font-family: 'Fraunces', serif;
@@ -584,7 +586,6 @@
   .building-addr { color: #c9bfa8; font-size: 15px; margin-bottom: 24px; }
   .building-meta {
     display: flex;
-    justify-content: flex-start;
     gap: 40px;
     padding-top: 20px;
     border-top: 1px solid #2a241d;
@@ -593,13 +594,8 @@
   .building-meta .label-sm { color: #8a8273; }
   .building-meta .val { color: var(--paper); }
 
-  /* ---------- Approach / Why FRC ---------- */
-  .approach-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    max-width: 880px;
-  }
+  /* ---------- Approach ---------- */
+  .approach-grid { display: flex; flex-direction: column; gap: 0; max-width: 880px; }
   .approach-item {
     display: grid;
     grid-template-columns: 120px 1fr;
@@ -609,10 +605,7 @@
     border-bottom: 1px solid var(--line);
   }
   .approach-item:first-child { padding-top: 0; }
-  .approach-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
+  .approach-item:last-child { border-bottom: none; padding-bottom: 0; }
   .approach-item .num {
     font-family: 'Fraunces', serif;
     font-style: italic;
@@ -620,7 +613,6 @@
     font-size: 64px;
     color: var(--accent);
     line-height: 0.9;
-    margin-bottom: 0;
   }
   .approach-item .approach-text { padding-top: 8px; }
   .approach-item h4 {
@@ -631,24 +623,11 @@
     letter-spacing: -0.015em;
     margin-bottom: 12px;
   }
-  .approach-item p {
-    color: var(--ink-soft);
-    font-size: 16px;
-    line-height: 1.6;
-    max-width: 580px;
-  }
+  .approach-item p { color: var(--ink-soft); font-size: 16px; line-height: 1.6; max-width: 580px; }
 
-  /* ---------- CTA ---------- */
-  .cta-section {
-    padding: 100px 0;
-    border-top: 1px solid var(--line);
-  }
-  .cta-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    max-width: 780px;
-  }
+  /* ---------- Contact ---------- */
+  .cta-section { padding: 100px 0; border-top: 1px solid var(--line); }
+  .cta-inner { display: flex; flex-direction: column; gap: 40px; max-width: 780px; }
   .cta-section h2 {
     font-family: 'Fraunces', serif;
     font-weight: 400;
@@ -663,11 +642,7 @@
     padding: 40px;
     border-radius: 4px;
   }
-  .cta-form .field {
-    border-bottom: 1px solid #3a342b;
-    padding: 14px 0;
-    display: block;
-  }
+  .cta-form .field { border-bottom: 1px solid #3a342b; padding: 14px 0; display: block; }
   .cta-form label {
     font-size: 11px;
     letter-spacing: 0.16em;
@@ -676,7 +651,9 @@
     display: block;
     margin-bottom: 6px;
   }
-  .cta-form input, .cta-form select {
+  .cta-form input,
+  .cta-form select,
+  .cta-form textarea {
     background: transparent;
     border: none;
     color: var(--paper);
@@ -684,7 +661,9 @@
     font-size: 15px;
     width: 100%;
     outline: none;
+    resize: none;
   }
+  .cta-form textarea { min-height: 72px; }
   .cta-form select option { background: var(--ink); }
   .cta-form button {
     margin-top: 28px;
@@ -705,31 +684,20 @@
     justify-content: center;
   }
   .cta-form button:hover { background: var(--accent-deep); }
+  .form-note { font-size: 12px; color: #8a8273; margin-top: 16px; text-align: center; }
+  .form-note a { color: #e8a48b; text-decoration: none; }
+  .form-note a:hover { text-decoration: underline; }
 
   /* ---------- Footer ---------- */
-  footer {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 80px 0 40px;
-  }
+  footer { background: var(--ink); color: var(--paper); padding: 80px 0 40px; }
   .foot-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 60px;
     margin-bottom: 60px;
   }
-  .foot-logo {
-    font-family: 'Fraunces', serif;
-    font-size: 32px;
-    margin-bottom: 18px;
-    letter-spacing: -0.02em;
-  }
-  .foot-tag {
-    color: #8a8273;
-    font-size: 14px;
-    line-height: 1.6;
-    max-width: 320px;
-  }
+  .foot-logo { font-family: 'Fraunces', serif; font-size: 32px; margin-bottom: 18px; letter-spacing: -0.02em; }
+  .foot-tag { color: #8a8273; font-size: 14px; line-height: 1.6; max-width: 320px; }
   .foot-col h5 {
     font-size: 11px;
     letter-spacing: 0.18em;
@@ -738,14 +706,7 @@
     margin-bottom: 18px;
     font-weight: 500;
   }
-  .foot-col a {
-    display: block;
-    color: var(--paper);
-    text-decoration: none;
-    font-size: 14px;
-    padding: 5px 0;
-    transition: color 0.2s ease;
-  }
+  .foot-col a { display: block; color: var(--paper); text-decoration: none; font-size: 14px; padding: 5px 0; transition: color 0.2s ease; }
   .foot-col a:hover { color: var(--accent); }
   .foot-bottom {
     border-top: 1px solid #2a241d;
@@ -759,18 +720,10 @@
   /* ---------- Animations ---------- */
   @keyframes rise {
     from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .reveal.in {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
 
   /* ---------- Mobile ---------- */
   @media (max-width: 900px) {
@@ -785,19 +738,12 @@
     .stat .num { font-size: 44px; }
     .section { padding: 64px 0; }
     .section-head { margin-bottom: 36px; gap: 16px; }
-    .building {
-      grid-template-columns: 1fr !important;
-      gap: 20px;
-    }
+    .building { grid-template-columns: 1fr !important; gap: 20px; }
     .building:nth-child(even) .building-img { order: 0; }
     .building:nth-child(even) .building-info { order: 0; }
     .building h4 { font-size: 28px; }
     .building-info { padding: 0; }
-    .approach-item {
-      grid-template-columns: 1fr;
-      gap: 12px;
-      padding: 32px 0;
-    }
+    .approach-item { grid-template-columns: 1fr; gap: 12px; padding: 32px 0; }
     .approach-item .num { font-size: 56px; }
     .approach-item h4 { font-size: 22px; }
     .space { padding: 28px 24px; min-height: auto; gap: 20px; }
@@ -854,12 +800,13 @@
 </header>
 
 <!-- ============== STATS ============== -->
+<!-- FIX: changed 385K → 280K (BLA 220K + PNK 60K, currently owned & operated) -->
 <section class="stats">
   <div class="wrap">
     <div class="stats-grid">
       <div class="stat">
-        <div class="num">385<span>K+</span></div>
-        <div class="label">Sq Ft Across Portfolio</div>
+        <div class="num">280<span>K+</span></div>
+        <div class="label">Sq Ft Owner-Operated</div>
       </div>
       <div class="stat">
         <div class="num">3</div>
@@ -885,7 +832,7 @@
         <div class="label">Available Now</div>
         <h2>Spaces ready for <em>their next chapter.</em></h2>
       </div>
-      <p class="lede">Currently leasing across our Long Island City portfolio. Tour by appointment — most spaces deliver in 30–60 days.</p>
+      <p class="lede">Currently leasing across our Long Island City portfolio. Tour by appointment — most spaces deliver in 30–60 days. A flagship 43,000 sq ft floor plate at The Blanchard is coming to market Q3 '26 — broker inquiries welcome now.</p>
     </div>
 
     <div class="filters reveal">
@@ -896,6 +843,26 @@
     </div>
 
     <div class="spaces reveal">
+
+      <!-- FLAGSHIP — COMING SOON (added for Vayner departure) -->
+      <article class="space space-coming-soon" data-cat="office creative lic">
+        <div class="space-top">
+          <span class="coming-badge"><span class="coming-dot"></span>Coming Soon · Q3 '26</span>
+          <span class="space-id">№ BLA–FL</span>
+        </div>
+        <div class="space-cta">✉</div>
+        <div>
+          <div class="space-flagship-tag">Flagship Opportunity</div>
+          <h3>Full creative floor plate — divisible</h3>
+          <div class="space-addr">The Blanchard · 2110 51st Ave, Hunters Point, LIC</div>
+        </div>
+        <div class="space-specs">
+          <div class="spec"><div class="v">43,146</div><div class="k">Total RSF</div></div>
+          <div class="spec"><div class="v">12'</div><div class="k">Ceilings</div></div>
+          <div class="spec"><div class="v">10,000+</div><div class="k">Min Divisible</div></div>
+        </div>
+        <div class="space-coming-note">Broker inquiries now: <a href="mailto:leasing@frcpropertymanagement.com">leasing@frcpropertymanagement.com</a></div>
+      </article>
 
       <article class="space" data-cat="office lic">
         <div class="space-top">
@@ -982,6 +949,7 @@
 
     <div class="portfolio reveal">
 
+      <!-- Property 01: The Blanchard — real photo -->
       <div class="building">
         <div class="building-img has-photo">
           <img src="images/blanchard.jpg" alt="The Blanchard Building, Long Island City" loading="lazy" />
@@ -998,10 +966,31 @@
         </div>
       </div>
 
+      <!-- Property 02: 33-02 Skillman — FIX: removed wrong Blanchard photo, CSS placeholder shown until correct photo is available -->
       <div class="building">
-        <div class="building-img has-photo">
-          <img src="images/skillman.webp" alt="33-02 Skillman Avenue, Long Island City" loading="lazy" />
-          <span class="building-img-tag">LIC · Acquiring 2026</span>
+        <div class="building-img">
+          <span class="building-acquiring">Acquiring 2026</span>
+          <div class="b-shape">
+            <svg viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10"  y="50"  width="55"  height="110" fill="#e8a48b" opacity="0.25"/>
+              <rect x="75"  y="28"  width="80"  height="132" fill="#e8a48b" opacity="0.18"/>
+              <rect x="165" y="60"  width="45"  height="100" fill="#e8a48b" opacity="0.22"/>
+              <rect x="20"  y="68"  width="9" height="11" fill="#e8a48b" opacity="0.45"/>
+              <rect x="36"  y="68"  width="9" height="11" fill="#e8a48b" opacity="0.45"/>
+              <rect x="20"  y="88"  width="9" height="11" fill="#e8a48b" opacity="0.45"/>
+              <rect x="36"  y="88"  width="9" height="11" fill="#e8a48b" opacity="0.45"/>
+              <rect x="85"  y="46"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="104" y="46"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="123" y="46"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="85"  y="70"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="104" y="70"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="123" y="70"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="85"  y="94"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="104" y="94"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+              <rect x="123" y="94"  width="12" height="14" fill="#e8a48b" opacity="0.45"/>
+            </svg>
+          </div>
+          <span class="building-img-tag">LIC · In Contract</span>
         </div>
         <div class="building-info">
           <div class="building-info-label">Property 02</div>
@@ -1014,6 +1003,7 @@
         </div>
       </div>
 
+      <!-- Property 03: 10-15 46th Ave (PNK) — real photo -->
       <div class="building">
         <div class="building-img has-photo">
           <img src="images/46th-ave.jpg" alt="10-15 46th Avenue, Long Island City" loading="lazy" />
@@ -1042,7 +1032,8 @@
         <div class="label">Why Tenants Stay</div>
         <h2>An owner-operator <em>actually picks up.</em></h2>
       </div>
-      <p class="lede">Most landlords answer to a fund. We answer to the tenant in Suite 04 who needs a leak fixed before Monday.</p>
+      <!-- FIX: removed "Suite 04" internal identifier -->
+      <p class="lede">Most landlords answer to a fund. We answer to a tenant who needs a leak fixed before Monday.</p>
     </div>
 
     <div class="approach-grid">
@@ -1071,36 +1062,45 @@
   </div>
 </section>
 
-<!-- ============== CTA ============== -->
+<!-- ============== CONTACT ============== -->
 <section class="cta-section" id="contact">
   <div class="wrap">
     <div class="cta-inner">
       <div class="reveal">
         <h2>Looking for space?<br/><em>Let's talk this week.</em></h2>
       </div>
-      <form class="cta-form reveal" onsubmit="event.preventDefault(); alert('Thanks — we\\'ll be in touch within 24 hours.');">
+      <form class="cta-form reveal" id="inquiry-form">
         <div class="field">
           <label>Your Name</label>
-          <input type="text" placeholder="Jane Doe" required />
+          <input type="text" id="f-name" placeholder="Jane Doe" required />
         </div>
         <div class="field">
           <label>Email</label>
-          <input type="email" placeholder="jane@company.com" required />
+          <input type="email" id="f-email" placeholder="jane@company.com" required />
         </div>
+        <!-- FIX: dropdown now maps to specific available spaces -->
         <div class="field">
-          <label>What kind of space?</label>
-          <select>
-            <option>Office</option>
-            <option>Retail</option>
-            <option>Creative / Loft</option>
-            <option>Not sure yet</option>
+          <label>Which space are you interested in?</label>
+          <select id="f-space">
+            <option value="">— Select a space —</option>
+            <option value="BLA-FL · 43,146 RSF · Full floor plate (Coming Q3 '26)">Full creative floor plate · 43,146 RSF · The Blanchard (Coming Soon)</option>
+            <option value="BLA-04A · 8,400 RSF · Pre-built office">Pre-built office, full floor · 8,400 RSF · BLA–04A</option>
+            <option value="PNK-GR1 · 2,250 RSF · Corner retail">Ground-floor corner retail · 2,250 RSF · PNK–GR1</option>
+            <option value="BLA-03C · 3,100 RSF · Loft with terrace">Loft suite with private terrace · 3,100 RSF · BLA–03C</option>
+            <option value="PNK-02 · 12,000 RSF · Creative loft">Creative loft, divisible · 12,000 RSF · PNK–02</option>
+            <option value="Not sure yet — open to options">Not sure yet — open to options</option>
           </select>
         </div>
         <div class="field">
           <label>Approximate Size (RSF)</label>
-          <input type="text" placeholder="2,000 – 5,000 sq ft" />
+          <input type="text" id="f-size" placeholder="e.g. 5,000 – 10,000 sq ft" />
+        </div>
+        <div class="field">
+          <label>Message (optional)</label>
+          <textarea id="f-message" placeholder="Timeline, specific requirements, broker name…"></textarea>
         </div>
         <button type="submit">Send inquiry <span class="arrow">→</span></button>
+        <p class="form-note">Or reach us directly: <a href="mailto:leasing@frcpropertymanagement.com">leasing@frcpropertymanagement.com</a></p>
       </form>
     </div>
   </div>
@@ -1112,7 +1112,8 @@
     <div class="foot-grid">
       <div>
         <div class="foot-logo">FRC</div>
-        <p class="foot-tag">A New York commercial real estate owner-operator. Long Island City.</p>
+        <!-- FIX: full legal entity name shown -->
+        <p class="foot-tag">FRC Property Management LLC — a New York commercial real estate owner-operator. Long Island City.</p>
       </div>
       <div class="foot-col">
         <h5>Leasing</h5>
@@ -1127,10 +1128,10 @@
         <a href="#">Pay Rent</a>
       </div>
       <div class="foot-col">
+        <!-- FIX: real company email, placeholder phone removed -->
         <h5>Contact</h5>
-        <a href="mailto:leasing@frcre.com">leasing@frcre.com</a>
-        <a href="tel:+12125550100">(212) 555–0100</a>
-        <a href="#">New York, NY</a>
+        <a href="mailto:leasing@frcpropertymanagement.com">leasing@frcpropertymanagement.com</a>
+        <a href="#">Long Island City, NY</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -1141,31 +1142,43 @@
 </footer>
 
 <script>
-  // Filter logic for available spaces
+  // Filter logic
   const filters = document.querySelectorAll('.filter');
-  const spaces = document.querySelectorAll('.space');
+  const spaces  = document.querySelectorAll('.space');
   filters.forEach(f => {
     f.addEventListener('click', () => {
       filters.forEach(x => x.classList.remove('active'));
       f.classList.add('active');
       const cat = f.dataset.f;
       spaces.forEach(s => {
-        if (cat === 'all' || s.dataset.cat.includes(cat)) {
-          s.style.display = 'flex';
-        } else {
-          s.style.display = 'none';
-        }
+        s.style.display = (cat === 'all' || s.dataset.cat.includes(cat)) ? 'flex' : 'none';
       });
     });
   });
 
-  // Reveal-on-scroll
-  const io = new IntersectionObserver((entries) => {
+  // Form — opens mailto with pre-filled details
+  document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name    = document.getElementById('f-name').value;
+    const email   = document.getElementById('f-email').value;
+    const space   = document.getElementById('f-space').value;
+    const size    = document.getElementById('f-size').value;
+    const message = document.getElementById('f-message').value;
+    const subject = encodeURIComponent('Leasing Inquiry — ' + (space || 'General'));
+    const body    = encodeURIComponent(
+      'Name: '    + name    + '\n' +
+      'Email: '   + email   + '\n' +
+      'Space: '   + space   + '\n' +
+      'Size: '    + size    + '\n' +
+      'Message: ' + message
+    );
+    window.location.href = 'mailto:leasing@frcpropertymanagement.com?subject=' + subject + '&body=' + body;
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
