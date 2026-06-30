@@ -7,6 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+<meta name="theme-color" content="#15110d" />
 <style>
   :root {
     --ink: #15110d;
@@ -1116,6 +1121,7 @@
           <textarea id="f-message" placeholder="Timeline, specific requirements, broker name…"></textarea>
         </div>
         <button type="submit">Send inquiry <span class="arrow">→</span></button>
+        <p class="form-note" id="form-status" role="status" aria-live="polite" style="display:none"></p>
         <p class="form-note">Or reach us directly: <a href="mailto:admin@8-properties.com">admin@8-properties.com</a></p>
       </form>
     </div>
@@ -1173,22 +1179,43 @@
   });
 
   // Form — opens mailto with pre-filled details
-  document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+  document.getElementById('inquiry-form').addEventListener('submit', async function(e) {
     e.preventDefault();
-    const name    = document.getElementById('f-name').value;
-    const email   = document.getElementById('f-email').value;
-    const space   = document.getElementById('f-space').value;
-    const size    = document.getElementById('f-size').value;
-    const message = document.getElementById('f-message').value;
-    const subject = encodeURIComponent('Leasing Inquiry — ' + (space || 'General'));
-    const body    = encodeURIComponent(
-      'Name: '    + name    + '\n' +
-      'Email: '   + email   + '\n' +
-      'Space: '   + space   + '\n' +
-      'Size: '    + size    + '\n' +
-      'Message: ' + message
-    );
-    window.location.href = 'mailto:admin@8-properties.com?subject=' + subject + '&body=' + body;
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    const status = document.getElementById('form-status');
+    const origBtn = btn.innerHTML;
+    const show = (msg, color) => { if (status) { status.textContent = msg; status.style.color = color; status.style.display = 'block'; } };
+    const payload = {
+      access_key: 'f9aa7fe3-ab43-44f7-abaf-0a7cc50cd074',
+      subject: 'Leasing Inquiry \u2014 ' + (document.getElementById('f-space').value || 'General'),
+      from_name: '8 Properties Website',
+      name: document.getElementById('f-name').value,
+      email: document.getElementById('f-email').value,
+      space: document.getElementById('f-space').value,
+      size: document.getElementById('f-size').value,
+      message: document.getElementById('f-message').value
+    };
+    btn.disabled = true; btn.textContent = 'Sending\u2026';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if (json.success) {
+        form.reset();
+        btn.innerHTML = 'Sent \u2713';
+        show('Thanks \u2014 your inquiry is on its way. We\u2019ll be in touch shortly.', '#9fe1cb');
+      } else {
+        btn.disabled = false; btn.innerHTML = origBtn;
+        show('Something went wrong. Please email admin@8-properties.com directly.', '#e8a48b');
+      }
+    } catch (err) {
+      btn.disabled = false; btn.innerHTML = origBtn;
+      show('Network error. Please email admin@8-properties.com directly.', '#e8a48b');
+    }
   });
 
   // Reveal on scroll
