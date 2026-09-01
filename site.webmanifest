@@ -1,0 +1,21 @@
+{
+  "name": "Moonshot Properties",
+  "short_name": "Moonshot",
+  "description": "Commercial space in Long Island City.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f4efe6",
+  "theme_color": "#15110d",
+  "icons": [
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
