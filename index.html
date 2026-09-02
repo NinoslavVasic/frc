@@ -9,9 +9,11 @@
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 <meta name="theme-color" content="#15110d" />
 <meta name="format-detection" content="telephone=yes" />
-<!-- Security headers, including the Content-Security-Policy, are served from _headers.
-     They are deliberately NOT meta tags: a policy inside the document also applies to
-     editors and preview tools that open this file. See README.md. -->
+<!-- GitHub Pages cannot set response headers, so the live Content-Security-Policy has to
+     ship in the document. The headers that CANNOT be expressed in a meta tag — HSTS,
+     X-Frame-Options / frame-ancestors, Permissions-Policy, COOP — live in _headers and
+     only take effect behind Cloudflare. See README.md. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; img-src 'self' data: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://unpkg.com; connect-src https://api.web3forms.com; manifest-src 'self'; upgrade-insecure-requests" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Moonshot Properties" />
@@ -28,8 +30,10 @@
 <meta name="twitter:image" content="https://www.moonshot-properties.nyc/images/og-image.jpg" />
 
 <link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
 <link rel="manifest" href="/site.webmanifest" />
 
