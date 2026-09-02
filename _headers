@@ -1,15 +1,18 @@
 # Security headers. Read by Cloudflare Pages and Netlify as-is.
-# GitHub Pages ignores this file — see README.md for the Cloudflare Transform Rule
-# that applies the same headers in front of a Pages origin.
+# GitHub Pages ignores this file — the live CSP is the meta tag in index.html.
+# Put Cloudflare in front of Pages (or move hosting) to get the real headers below.
+# Requires .nojekyll in the repo root, or Jekyll strips this file (leading underscore).
 
 /*
-  Content-Security-Policy: default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: https://*.tile.openstreetmap.org; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://unpkg.com; connect-src https://api.web3forms.com; manifest-src 'self'
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy: default-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://unpkg.com; connect-src https://api.web3forms.com; manifest-src 'self'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), microphone=(), payment=(), usb=()
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), microphone=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  X-Permitted-Cross-Domain-Policies: none
 
 /images/*
   Cache-Control: public, max-age=31536000, immutable
@@ -20,5 +23,24 @@
 /*.png
   Cache-Control: public, max-age=604800
 
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+/site.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=604800
+
+/.well-known/security.txt
+  Content-Type: text/plain; charset=utf-8
+
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
+
+/404.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/favicon-proof.html
+  X-Robots-Tag: noindex, nofollow
+
+/map.html
+  X-Robots-Tag: noindex, nofollow
