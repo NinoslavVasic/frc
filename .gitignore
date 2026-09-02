@@ -1,0 +1,11 @@
+# Design-tool working files — not part of the published site
+support.js
+*.dc.html
+.thumbnail
+uploads/
+screenshots/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
