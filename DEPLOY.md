@@ -19,10 +19,17 @@ sitemap.xml
 site.webmanifest
 README.md
 DEPLOY.md
+.nojekyll
+.gitignore
+.well-known/security.txt
 favicon.ico
+favicon.svg
 favicon-16.png
 favicon-32.png
 favicon-180.png
+favicon-192.png
+favicon-512.png
+favicon-maskable-512.png
 images/blanchard.webp
 images/blanchard-card.webp
 images/skillman.webp
@@ -75,8 +82,21 @@ across `index.html`, `robots.txt`, `sitemap.xml` and `README.md`:
 
 ## 5. Security headers
 
-GitHub Pages cannot set response headers, so `_headers` does nothing on Pages
-alone. Two ways to make it real:
+`.nojekyll` is now required, not optional. Pages runs Jekyll by default, and
+Jekyll silently drops any file or folder whose name starts with `_` or `.` —
+that is `_headers` and the whole `.well-known/` folder. An empty `.nojekyll`
+in the repo root turns Jekyll off and publishes them verbatim.
+
+The Content-Security-Policy now ships as a `<meta http-equiv>` tag in
+`index.html` and `404.html`, because that is the only mechanism Pages honours.
+It covers the injection-facing directives: `default-src`, `script-src`,
+`style-src`, `img-src`, `connect-src`, `form-action`, `base-uri`,
+`object-src` and `upgrade-insecure-requests`.
+
+Four headers cannot be set from a meta tag at all and are still inert on Pages:
+`Strict-Transport-Security`, `X-Frame-Options` / `frame-ancestors`,
+`Permissions-Policy` and `Cross-Origin-Opener-Policy`. Clickjacking and HSTS
+are the two that actually matter. Two ways to make them real:
 
 - **Cloudflare in front of Pages.** Point DNS at Cloudflare, set the record to
   Proxied (orange cloud), then Rules → Transform Rules → Modify Response Header,
@@ -85,8 +105,12 @@ alone. Two ways to make it real:
 - **Move hosting to Cloudflare Pages or Netlify.** Both read `_headers`
   directly, no rules to write.
 
-Until one of those is in place the site is still fine — it just ships without
-CSP, HSTS and the rest.
+Until one of those is in place the site ships with CSP but no HSTS and no
+framing protection. Pages does send its own HSTS header once **Enforce HTTPS**
+is ticked, so that gap is mostly covered; `frame-ancestors` is not.
+
+Do not submit the domain to hstspreload.org yet. That needs the `preload`
+directive on the response, which Pages does not send.
 
 ## 6. Check after it is live
 
@@ -98,6 +122,15 @@ CSP, HSTS and the rest.
 - [ ] Paste the URL into a Slack or iMessage window and check the share card
 - [ ] Open it on a phone: nav links hide, the leasing card stacks under the listings
 - [ ] `https://www.moonshot-properties.nyc/nonsense` shows the 404 page
+- [ ] `/.well-known/security.txt` returns plain text, not a 404 — if it 404s,
+      `.nojekyll` is missing or was not committed
+- [ ] DevTools → Console is clean. A CSP violation there means the meta policy
+      is blocking something the page needs. Note that OSM is served from the
+      bare host `tile.openstreetmap.org`, and a CSP wildcard like
+      `https://*.tile.openstreetmap.org` does NOT match a bare host — both
+      forms must stay listed in `img-src` or the map loads with blank tiles
+- [ ] Run the URL through securityheaders.com and observatory.mozilla.org
+- [ ] Lighthouse: install prompt works, icons resolve, no manifest warnings
 
 ## 7. Still outstanding
 
@@ -105,5 +138,7 @@ CSP, HSTS and the rest.
 - Photographs of the finished second floor at Skillman
 - Real URLs for tenant portal, maintenance requests and rent payment. The footer
   links currently open a pre-addressed email to admin@ instead.
-- Confirm the three map pin coordinates against the recorded addresses:
-  `SITES` near the top of the `<script>` block in `index.html`
+- ~~Confirm the three map pin coordinates~~ Done 2026-09-02. Owner-supplied
+  DMS readings converted to decimal in `SITES`:
+  Blanchard 40.740942, -73.949336 / 10-15 46th Ave 40.747111, -73.951894 /
+  33-02 Skillman 40.746553, -73.930789
