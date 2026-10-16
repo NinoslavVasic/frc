@@ -157,7 +157,7 @@
     ]).then(function () {
       var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
       var ink = dark ? '#f5f4f2' : '#111111', muted = dark ? '#a8a8a8' : '#6b6b6b', halo = dark ? 'rgba(17,17,17,.88)' : 'rgba(255,255,255,.92)', base = dark ? '#111111' : '#ffffff', g = dark ? 'Dark' : 'Light';
-      map = L.map(mapEl, { zoomControl: false, scrollWheelZoom: false });
+      map = L.map(mapEl, { zoomControl: false, scrollWheelZoom: false, dragging: !L.Browser.mobile });
       L.control.zoom({ position: 'bottomright' }).addTo(map);
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_' + g + '_Gray_Base/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri', maxZoom: 19, maxNativeZoom: 16 }).addTo(map);
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_' + g + '_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, maxNativeZoom: 16, opacity: .8 }).addTo(map);
