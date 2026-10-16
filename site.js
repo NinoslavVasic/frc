@@ -152,8 +152,8 @@
   function ensureMap() {
     if (loading) return loading;
     loading = Promise.all([
-      loadAsset('link', { rel: 'stylesheet', href: 'vendor/leaflet/leaflet.css' }),
-      loadAsset('script', { src: 'vendor/leaflet/leaflet.js' })
+      loadAsset('link', { rel: 'stylesheet', href: 'leaflet.css' }),
+      loadAsset('script', { src: 'leaflet.js' })
     ]).then(function () {
       var dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
       var ink = dark ? '#f5f4f2' : '#111111', muted = dark ? '#a8a8a8' : '#6b6b6b', halo = dark ? 'rgba(17,17,17,.88)' : 'rgba(255,255,255,.92)', base = dark ? '#111111' : '#ffffff', g = dark ? 'Dark' : 'Light';
