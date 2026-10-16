@@ -13,11 +13,11 @@ commercial buildings in Long Island City.
 
 ## Stack
 
-- Single-file HTML with one `<style>` and one `<script>`. No build step, no dependencies to install.
-- Fonts from Google Fonts: Cormorant Garamond (headings), Montserrat (body), Fraunces (logo only), `display=swap`.
+- HTML with one `<style>`; the page script is `js/site.js`. No build step, no dependencies to install.
+- Fonts (Cormorant Garamond, Montserrat, Fraunces) are self-hosted in `fonts/`.
 - Light and dark mode follow the visitor's system setting.
 - Location: 7-line diagram (inline SVG) with a switch to a street map. Leaflet 1.9.4
-  loads from unpkg with SRI hashes, only when the street map is first opened. Tiles: Esri World Light/Dark Gray Canvas.
+  is self-hosted in `vendor/leaflet/` and loads only when the street map is first opened. Tiles: Esri World Light/Dark Gray Canvas.
 - Inquiry form posts to Web3Forms.
 - Hosted on GitHub Pages.
 
@@ -46,8 +46,7 @@ commercial buildings in Long Island City.
 
 ## Updating
 
-**Listings** live in the `LISTINGS` array in the script at the bottom of
-`index.html`. The table, the phone cards and the form's Space menu are all built
+**Listings** live in the `LISTINGS` array in `js/site.js`. The table, the phone cards and the form's Space menu are all built
 from it, so one edit updates all three. Fields: `size` (RSF), `rate` ($/SF/yr,
 used for the monthly base), `rent` (as shown), `st` (status), `loopnet` (link).
 
@@ -56,7 +55,11 @@ used for the monthly base), `rent` (as shown), `st` (status), `loopnet` (link).
 `height` attributes in `index.html` must match the new file, or the page
 will shift as images load.
 
-**Map pins:** `SITES` in the script. Coordinates are from the owner's Google Earth links (10/16/2026).
+**Map pins:** `SITES` in `js/site.js`. Coordinates are from the owner's Google Earth links (10/16/2026).
+
+## Privacy rule
+
+The site sets no cookies and loads no analytics, pixels or third-party code on page load. Keep it that way. **Before adding analytics, a Meta/LinkedIn/TikTok pixel, Google Tag Manager, a chat widget or an embedded video, add a consent banner first and make sure the tag does not fire until the visitor agrees**, then update `privacy.html` and the CSP. See `AUDIT-2026-10-16.md`.
 
 ## Performance and security notes
 
