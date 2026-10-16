@@ -251,3 +251,73 @@
     });
   });
 })();
+
+/* ---- v6.3: The Rawson hero intro (24 s loop) and the arrival sequence in The Rawson section ---- */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sec = document.getElementById('rawson');
+
+  function countUp(el, delay) {
+    if (reduce || !el) return;
+    var n = +el.getAttribute('data-count'), start = null;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min(1, Math.max(0, (ts - start - (delay || 0)) / 1400)), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(n * e).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function arrive() {
+    if (!sec || reduce) return;
+    sec.classList.remove('arrive'); void sec.offsetWidth; sec.classList.add('arrive');
+    countUp(sec.querySelector('.facts-list [data-count]'), 1100);
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href="#rawson"]');
+    if (a) arrive();
+  });
+
+  var root = document.querySelector('[data-ri]');
+  if (!root) return;
+  root.classList.add('ri-js');
+  var sc = [].slice.call(root.querySelectorAll('.ri-sc'));
+  var ms = sc.map(function (s) { return +s.getAttribute('data-ms'); });
+  var total = ms.reduce(function (a, b) { return a + b; }, 0);
+  var bar = root.querySelector('.ri-prog i'), btn = root.querySelector('.ri-pause');
+  var cur = 0, el = 0, last = performance.now(), userPaused = false, visible = true;
+
+  function running() { return !userPaused && visible && !document.hidden; }
+  function show(i) {
+    sc.forEach(function (s, j) { if (j !== i) s.classList.remove('ri-on'); });
+    var s = sc[i]; s.classList.remove('ri-on'); void s.offsetWidth; s.classList.add('ri-on');
+    [].forEach.call(s.querySelectorAll('[data-count]'), function (b) { countUp(b, 0); });
+  }
+  function go(i) { cur = i; el = 0; show(i); }
+  function tick(now) {
+    if (running()) { el += now - last; if (el >= ms[cur]) go((cur + 1) % sc.length); }
+    last = now;
+    var before = 0; for (var k = 0; k < cur; k++) before += ms[k];
+    bar.style.width = Math.min(100, (before + el) / total * 100) + '%';
+    requestAnimationFrame(tick);
+  }
+  function setPaused(p) {
+    userPaused = p; btn.textContent = p ? 'Play' : 'Pause';
+    btn.setAttribute('aria-label', p ? 'Play animation' : 'Pause animation');
+  }
+  btn.addEventListener('click', function (e) { e.stopPropagation(); setPaused(!userPaused); });
+  root.addEventListener('click', function (e) {
+    if (e.target.closest('a,button') || !sec) return;
+    sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#rawson');
+    arrive();
+  });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(root);
+  }
+  if (reduce) { setPaused(true); }
+  requestAnimationFrame(tick);
+})();

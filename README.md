@@ -16,6 +16,7 @@ commercial buildings in Long Island City.
 - HTML with one `<style>`; the page script is `js/site.js`. No build step, no dependencies to install.
 - Fonts (Cormorant Garamond, Montserrat, Fraunces) are self-hosted in `fonts/`.
 - Light and dark mode follow the visitor's system setting.
+- Hero: The Rawson intro, a 24-second loop of 5 scenes in the photo frame (HTML and CSS in `index.html`, player at the end of `site.js`). Its text is typed in the hero markup: when a Rawson listing changes, change it there too. See `DEPLOY-v6.3.md`.
 - Location: 7-line diagram (inline SVG) with a switch to a street map. Leaflet 1.9.4
   is self-hosted in `vendor/leaflet/` and loads only when the street map is first opened. Tiles: Esri World Light/Dark Gray Canvas.
 - Inquiry form posts to Web3Forms.
