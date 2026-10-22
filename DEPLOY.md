@@ -136,8 +136,8 @@ directive on the response, which Pages does not send.
 
 - Interior photography and floor plans for Suites 100 and 201 at The Blanchard
 - Photographs of the finished second floor at Skillman
-- Real URLs for tenant portal, maintenance requests and rent payment. The footer
-  links currently open a pre-addressed email to admin@ instead.
+- ~~Real URLs for tenant portal, maintenance requests and rent payment.~~ Done
+  10/22/2026 (v6.4): all three footer links open https://us1.portal.re-leased.com/.
 - ~~Confirm the three map pin coordinates~~ Done 2026-09-02. Owner-supplied
   DMS readings converted to decimal in `SITES`:
   Blanchard 40.740942, -73.949336 / 10-15 46th Ave 40.747111, -73.951894 /
