@@ -5,6 +5,10 @@
   var LN = 'https://www.loopnet.com/Listing/33-02-Skillman-Ave-Long-Island-City-NY/42041673/';
   var SUITE = 'Second-floor suite with black-framed industrial windows on several exposures and light all day. Open loft layout with exposed ceilings, spiral ductwork and new LED linear lighting. HVAC, power, lighting and a wet sprinkler system are in place, so fit-out is layout and finishes only. Sealed concrete floors and a private double-door entry.';
   var SUITE_FEATS = ["13' ceilings", 'Private double-door entry', 'HVAC in place', 'Loading dock'];
+  var LNB = 'https://www.loopnet.com/Listing/21-09-Borden-Ave-Long-Island-City-NY/42735303/';
+  function bla(id, space, sub, size, use, build, desc, feats) {
+    return { id: 'b' + id, b: 'blanchard', bn: 'The Blanchard', space: space, sub: sub, size: size, rate: 43, rent: '$43.00', use: use, st: 'Available now', build: build, term: 'Negotiable', desc: desc, feats: feats.concat(['Energy rating A']), loopnet: LNB };
+  }
   function r2(id, size, fits, sub, extra) {
     return { id: id, b: 'rawson', bn: 'The Rawson', space: 'Suite ' + id + ' · 2nd floor', sub: sub, size: size, rate: 35, rent: '$35.00', use: 'Office', st: 'Available now', build: 'Partial build-out', term: '1–10 years', fits: fits, desc: SUITE + (extra || ''), feats: SUITE_FEATS, loopnet: LN };
   }
@@ -20,9 +24,10 @@
     { id: '210', b: 'rawson', bn: 'The Rawson', space: 'Suite 210 · 2nd floor', sub: 'Largest suite on the floor, long window lines', size: 4870, rate: 35, rent: '$35.00', use: 'Office', st: 'Available now', build: 'Partial build-out', term: '1–10 years', fits: '10–40 people', desc: 'A large office suite with long window lines and strong natural light throughout. Polished concrete floors and exposed architectural details. The open plan suits creative, professional, showroom or studio users.', feats: ["13' finished ceilings", 'Open plan', 'Loading dock'], loopnet: LN },
     { id: '4th', b: 'rawson', bn: 'The Rawson', space: '4th floor office suites', sub: 'Move-in-ready suites, shared kitchen and restrooms', sizeLabel: '500–10,000', min: 500, max: 10000, rent: 'On request', use: 'Office', st: 'In design', build: 'In design', desc: 'Office suites from 500 to 10,000 RSF, with a shared kitchen and restrooms. Register now and Joe will send plans and rents before the floor is listed.', feats: [] },
     { id: '6th', b: 'rawson', bn: 'The Rawson', space: '6th floor · full floor', sub: 'Open plate, no build-out, windows on every side', sizeLabel: 'Full floor', rent: 'On request', use: 'Office', st: 'Available', build: 'None', desc: 'A full open floor with windows on every side, delivered without build-out.', feats: [] },
-    { id: 'b100', b: 'blanchard', bn: 'The Blanchard', space: 'Unit 100 · ground floor', sub: 'Creative office, 1,600 A shared with Unit 201', size: 20897, rent: 'On request', use: 'Creative office', st: 'Available', desc: 'Ground-floor creative office. Shares 1,600 A at 120/208 V, direct-metered, with Unit 201. Air-conditioning plant and in-suite restrooms stay.', feats: ['1,600 A', '150 lbs/SF', "9' windows"] },
-    { id: 'b201', b: 'blanchard', bn: 'The Blanchard', space: 'Unit 201 · full 2nd floor', sub: 'Divides north 10,607 / south 11,642', size: 22249, rent: 'On request', use: 'Creative office', st: 'Available', desc: 'Full second floor that divides into north (10,607 RSF) and south (11,642 RSF). Air-conditioning plant and in-suite restrooms stay.', feats: ['1,600 A', 'Divisible', "20' × 34' bays"] },
-    { id: 'b402', b: 'blanchard', bn: 'The Blanchard', space: 'Unit 402 · 4th floor', sub: '', size: 12678, rent: 'On request', use: 'Creative office', st: 'Available', desc: 'Fourth-floor space in The Blanchard. Measured to REBNY standard, 27% loss factor.', feats: [] }
+    bla('102', 'Suite 102 · ground floor', 'Office, showroom or retail · partial build-out', 10000, 'Office/Retail', 'Partial build-out', 'A ground-floor suite for an office, showroom or retail user. It is partly built out as a standard office, with a reception area and a mostly open floor plan. Natural light, and HVAC is available after hours.', ['Reception area', 'Mostly open plan', 'Natural light', 'After-hours HVAC']),
+    bla('103', 'Suite 103 · ground floor', 'Flex suite with its own loading dock', 6000, 'Flex', 'Full build-out', 'A ground-floor flex suite with its own loading dock. Built out, with a reception area. Suits office, showroom or retail use.', ['Own loading dock', 'Reception area', 'After-hours HVAC']),
+    bla('201', 'Suite 201 · 2nd floor', 'Flex suite, built out, private restrooms', 8000, 'Flex', 'Full build-out', 'A second-floor flex suite for creative, studio or office use. Partitioned offices, central air conditioning and private restrooms are in place.', ['Partitioned offices', 'Central A/C', 'Private restrooms']),
+    bla('202', 'Suite 202 · 2nd floor', '14,500 SF on one floor, built out', 14500, 'Flex', 'Full build-out', 'A large second-floor flex suite on one floor for creative, studio or office use. Partitioned offices, central air conditioning and private restrooms are in place.', ['One floor', 'Partitioned offices', 'Central A/C', 'Private restrooms'])
   ];
   var PINK_WAITLIST = 'The Pink Building · waitlist';
 
@@ -93,6 +98,10 @@
     });
   }
   bindSeg('f-building', 'b'); bindSeg('f-size', 'sz');
+  /* "See the suites" links set the building filter before the page scrolls to the table */
+  document.querySelectorAll('[data-filter]').forEach(function (a) {
+    a.addEventListener('click', function () { var b = document.querySelector('#f-building button[data-v="' + a.dataset.filter + '"]'); if (b) b.click(); });
+  });
   render();
 
   /* ---- Form Space menu + "Tour" buttons ---- */

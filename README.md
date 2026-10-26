@@ -79,8 +79,9 @@ Unchanged. See `DEPLOY.md`, section 4.
 
 ## Open items
 
-- [ ] Interior photography and floor plans for Units 100, 201 and 402 at The Blanchard; list them on LoopNet
-- [ ] Larger Blanchard storefront image (current file is 512 px)
+- [x] The Blanchard photos, suites, rent and LoopNet link from listing 42735303 (v6.5, 10/26/2026)
+- [ ] Floor plans for Blanchard Suites 102, 103, 201, 202
+- [ ] Confirm usage rights for the courtyard photo (same image as the 2023 Newmark sale brochure)
 - [ ] 6th floor size and rent at The Rawson; 4th floor rents
 - [x] Tenant portal, Pay rent and Maintenance request link to the Re-Leased tenant portal, https://us1.portal.re-leased.com/ (v6.4, 10/22/2026)
 - [ ] Matterport 3D tour link for The Rawson
