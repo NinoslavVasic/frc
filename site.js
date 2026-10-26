@@ -13,7 +13,7 @@
     '202': [['bla-202-1', 'Suite 202 open office along the windows'], ['bla-202-2', 'Suite 202 private office with a glass front'], ['bla-202-3', 'Suite 202 pantry beside the open office']]
   };
   function bla(id, space, sub, size, use, build, desc, feats) {
-    return { id: 'b' + id, b: 'blanchard', bn: 'The Blanchard', space: space, sub: sub, size: size, rate: 43, rent: '$43.00', use: use, st: 'Available now', build: build, term: 'Negotiable', desc: desc, feats: feats.concat(['Energy rating A']), loopnet: LNB, photos: PHOTOS[id] };
+    return { id: 'b' + id, b: 'blanchard', bn: 'The Blanchard', space: space, sub: sub, size: size, rate: 43, rent: '$43.00 gross', use: use, st: 'Available now', build: build, term: 'Negotiable', desc: desc, feats: feats.concat(['Energy rating A']), loopnet: LNB, photos: PHOTOS[id] };
   }
   function r2(id, size, fits, sub, extra) {
     return { id: id, b: 'rawson', bn: 'The Rawson', space: 'Suite ' + id + ' · 2nd floor', sub: sub, size: size, rate: 35, rent: '$35.00', use: 'Office', st: 'Available now', build: 'Partial build-out', term: '1–10 years', fits: fits, desc: SUITE + (extra || ''), feats: SUITE_FEATS, loopnet: LN };
