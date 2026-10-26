@@ -80,6 +80,7 @@ Unchanged. See `DEPLOY.md`, section 4.
 ## Open items
 
 - [x] The Blanchard photos, suites, rent and LoopNet link from listing 42735303 (v6.5, 10/26/2026)
+- [x] Suite photos and hero intro for The Blanchard (v6.6, 10/26/2026)
 - [ ] Floor plans for Blanchard Suites 102, 103, 201, 202
 - [ ] Confirm usage rights for the courtyard photo (same image as the 2023 Newmark sale brochure)
 - [ ] 6th floor size and rent at The Rawson; 4th floor rents

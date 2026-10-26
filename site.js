@@ -6,8 +6,14 @@
   var SUITE = 'Second-floor suite with black-framed industrial windows on several exposures and light all day. Open loft layout with exposed ceilings, spiral ductwork and new LED linear lighting. HVAC, power, lighting and a wet sprinkler system are in place, so fit-out is layout and finishes only. Sealed concrete floors and a private double-door entry.';
   var SUITE_FEATS = ["13' ceilings", 'Private double-door entry', 'HVAC in place', 'Loading dock'];
   var LNB = 'https://www.loopnet.com/Listing/21-09-Borden-Ave-Long-Island-City-NY/42735303/';
+  var PHOTOS = {
+    '102': [['bla-102-1', 'Suite 102 reception desk with a copper-panel wall'], ['bla-102-2', 'Suite 102 open area with glass-walled offices'], ['bla-102-3', 'Suite 102 corner of the open area']],
+    '103': [['bla-103-1', 'Suite 103 open space with black walls and concrete floor'], ['bla-103-2', 'Suite 103 roll-up door to the loading dock'], ['bla-103-3', 'Suite 103 corridor with a steel stair to the upper platform']],
+    '201': [['bla-201-1', 'Suite 201 open office toward the windows'], ['bla-201-2', 'Suite 201 glass-walled private offices'], ['bla-201-3', 'Suite 201 pantry with black cabinets']],
+    '202': [['bla-202-1', 'Suite 202 open office along the windows'], ['bla-202-2', 'Suite 202 private office with a glass front'], ['bla-202-3', 'Suite 202 pantry beside the open office']]
+  };
   function bla(id, space, sub, size, use, build, desc, feats) {
-    return { id: 'b' + id, b: 'blanchard', bn: 'The Blanchard', space: space, sub: sub, size: size, rate: 43, rent: '$43.00', use: use, st: 'Available now', build: build, term: 'Negotiable', desc: desc, feats: feats.concat(['Energy rating A']), loopnet: LNB };
+    return { id: 'b' + id, b: 'blanchard', bn: 'The Blanchard', space: space, sub: sub, size: size, rate: 43, rent: '$43.00', use: use, st: 'Available now', build: build, term: 'Negotiable', desc: desc, feats: feats.concat(['Energy rating A']), loopnet: LNB, photos: PHOTOS[id] };
   }
   function r2(id, size, fits, sub, extra) {
     return { id: id, b: 'rawson', bn: 'The Rawson', space: 'Suite ' + id + ' · 2nd floor', sub: sub, size: size, rate: 35, rent: '$35.00', use: 'Office', st: 'Available now', build: 'Partial build-out', term: '1–10 years', fits: fits, desc: SUITE + (extra || ''), feats: SUITE_FEATS, loopnet: LN };
@@ -47,7 +53,8 @@
       .filter(function (s) { return s[1]; })
       .map(function (s) { return '<div><dt>' + s[0] + '</dt><dd>' + esc(s[1]) + '</dd></div>'; }).join('');
     var chips = (l.feats || []).map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('');
-    return '<div class="detail-grid"><div><p>' + esc(l.desc) + '</p>' + (chips ? '<div class="chips">' + chips + '</div>' : '') + '</div>' +
+    var shots = (l.photos || []).map(function (ph) { return '<img src="images/' + ph[0] + '.webp" alt="' + esc(ph[1]) + '" width="1200" height="900" loading="lazy" decoding="async">'; }).join('');
+    return '<div class="detail-grid"><div><p>' + esc(l.desc) + '</p>' + (chips ? '<div class="chips">' + chips + '</div>' : '') + (shots ? '<div class="shots">' + shots + '</div>' : '') + '</div>' +
       '<div><dl class="specs num">' + specs + '</dl><div class="btn-row">' +
       '<a class="btn btn-light" href="#contact" data-tour-id="' + l.id + '">Tour this space</a>' +
       (l.loopnet ? '<a class="btn btn-outline-light" href="' + l.loopnet + '" target="_blank" rel="noopener">View on LoopNet ↗</a>' : '') +
@@ -261,7 +268,7 @@
   });
 })();
 
-/* ---- v6.3: The Rawson hero intro (24 s loop) and the arrival sequence in The Rawson section ---- */
+/* ---- v6.3 / v6.6: hero intro (The Rawson 24 s, then The Blanchard 24 s) and the arrival sequence in The Rawson section ---- */
 (function () {
   'use strict';
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -297,6 +304,8 @@
   var ms = sc.map(function (s) { return +s.getAttribute('data-ms'); });
   var total = ms.reduce(function (a, b) { return a + b; }, 0);
   var bar = root.querySelector('.ri-prog i'), btn = root.querySelector('.ri-pause');
+  var view = root.querySelector('.ri-view'), cap = document.getElementById('ri-cap');
+  function target(s) { return s.getAttribute('data-href') || root.getAttribute('data-href'); }
   var cur = 0, el = 0, last = performance.now(), userPaused = false, visible = true;
 
   function running() { return !userPaused && visible && !document.hidden; }
@@ -304,6 +313,8 @@
     sc.forEach(function (s, j) { if (j !== i) s.classList.remove('ri-on'); });
     var s = sc[i]; s.classList.remove('ri-on'); void s.offsetWidth; s.classList.add('ri-on');
     [].forEach.call(s.querySelectorAll('[data-count]'), function (b) { countUp(b, 0); });
+    if (view) { view.href = target(s); view.textContent = 'View ' + (s.getAttribute('data-name') || 'The Rawson'); }
+    if (cap && s.getAttribute('data-cap')) cap.textContent = s.getAttribute('data-cap');
   }
   function go(i) { cur = i; el = 0; show(i); }
   function tick(now) {
@@ -319,10 +330,12 @@
   }
   btn.addEventListener('click', function (e) { e.stopPropagation(); setPaused(!userPaused); });
   root.addEventListener('click', function (e) {
-    if (e.target.closest('a,button') || !sec) return;
-    sec.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-    if (history.replaceState) history.replaceState(null, '', '#rawson');
-    arrive();
+    if (e.target.closest('a,button')) return;
+    var h = target(sc[cur]), dest = document.querySelector(h);
+    if (!dest) return;
+    dest.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', h);
+    if (h === '#rawson') arrive();
   });
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(root);
