@@ -14,3 +14,8 @@ Change:
 - Campaign.gs v3: track_() builds links to TARGET_URL / UNSUB_URL on this site.
 
 Check after deploy: open blanchard.html?t=<test token>; a TEST click row shows on the Events tab.
+
+## v6.9 — 10/27/2026 — Two email buttons, two places on the page
+- blanchard.html: id="tour" on the video, id="suites" on the price line above the suites table,
+  scroll-margin-top 16px, hidden table caption for screen readers.
+- Email button 1 opens #tour (logged as "click"); button 2 opens #suites (logged as "suites").
